@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:insert="~{fragments/header.html}"></th:block>
+<title>Movie-Ticket - Movie Ticket Booking</title>
+<link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+	<th:block th:insert="~{fragments/navbar.html}"></th:block>
+	<th:block th:insert="~{fragments/message.html}"></th:block>
+<div>
+	<header class="hero-section">
+		<div class="container">
+			<h1 class="hero-title">Welcome to MovieTicket Site</h1>
+			<p class="hero-subtitle">Book your movie tickets with ease</p>
+			<a href="/" class="btn btn-primary btn-lg">Book Now</a>
+		</div>
+	</header>
+
+	<div class="container mt-5">
+		<h2 class="text-center mb-4">Featured Movies</h2>
+
+		<div id="movieCarousel" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img src="/images/m3.jpg"
+						class="d-block w-100" alt="Movie 1">
+					<div class="carousel-caption d-none d-md-block">
+						<h5 class="movie-title">Joker</h5>
+						<p>Arthur Fleck, a party clown and a failed stand-up comedian, leads an impoverished life with his ailing mother</p>
+					</div>
+				</div>
+			</div>
+			
+			<button class="carousel-control-prev" type="button"
+				data-bs-target="#movieCarousel" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button"
+				data-bs-target="#movieCarousel" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
+	</div>
+</div>
+	<th:block th:insert=~{fragments/footer.html}></th:block>
+</body>
+</html>

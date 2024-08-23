@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="~{fragments/header.html}"></th:block>
+    <title>Movie-Ticket - Customer Registration</title>
+    <link rel="stylesheet" href="/css/signup.css">
+</head>
+<body>
+    <th:block th:insert="~{fragments/navbar.html}"></th:block>
+    <th:block th:insert="~{fragments/message.html}"></th:block>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-container">
+                    <h2 class="text-center mb-4">Customer Registration</h2>
+                    <form action="/customer/signup" method="post" th:object="${customer}">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input th:field="*{name}" type="text" class="form-control" id="name" name="name">
+                            <span th:errors="*{name}"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mobile" class="form-label">Mobile</label>
+                            <input th:field="*{mobile}" type="tel" class="form-control" id="mobile" name="mobile">
+                            <span th:errors="*{mobile}"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input th:field="*{email}" type="text" class="form-control" id="email" name="email">
+                       	 <span th:errors="*{email}"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input th:field="*{password}" type="password" class="form-control" id="password" name="password">
+                        	 <span th:errors="*{password}"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input th:field="*{confirmPassword}" type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+                        	 <span th:errors="*{confirmPassword}"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Gender</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input th:field="*{gender}" class="form-check-input" type="radio" name="gender" id="male" value="male">
+                                    <label class="form-check-label" for="male">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input th:field="*{gender}" class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                    <label class="form-check-label" for="female">Female</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input th:field="*{gender}" class="form-check-input" type="radio" name="gender" id="other" value="other">
+                                    <label class="form-check-label" for="other">Other</label>
+                                </div>
+                                 <span th:errors="*{gender}"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dob" class="form-label">Date of Birth</label>
+                            <input th:field="*{dob}" type="date" class="form-control" id="dob" name="dob">
+                            <span th:errors="*{dob}"></span>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </div>
+                    </form>
+                    <div class="mt-3 text-center">
+                        <p>Want to register as a theatre? <a href="/theatre/signup">Click here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<th:block th:insert=~{fragments/footer.html}></th:block>
+</body>
+</html>
+                                    

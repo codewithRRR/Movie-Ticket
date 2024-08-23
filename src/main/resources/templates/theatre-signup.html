@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:insert="~{fragments/header.html}"></th:block>
+<title>Movie-Ticket - Theatre Registration</title>
+<link rel="stylesheet" href="/css/signup.css">
+</head>
+<body>
+	<th:block th:insert="~{fragments/navbar.html}"></th:block>
+	<th:block th:insert="~{fragments/message.html}"></th:block>
+
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="form-container">
+					<h2 class="text-center mb-4">Theatre Registration</h2>
+					<form action="/theatre/signup" method="post" th:object="${theatre}">
+						<div class="mb-3">
+							<label for="name" class="form-label">Theatre Name</label> <input
+								type="text" class="form-control" id="name" name="name"
+								th:field="*{name}" required> 
+								<span th:errors="*{name}"></span>
+						</div>
+						<div class="mb-3">
+							<label for="address" class="form-label">Address</label>
+							<textarea class="form-control" id="address" name="address"
+								rows="3" th:field="*{address}" required></textarea>
+							<span th:errors="*{address}"></span>
+						</div>
+						<div class="mb-3">
+							<label for="mobile" class="form-label">Mobile</label> <input
+								type="tel" class="form-control" id="mobile" name="mobile"
+								th:field="*{mobile}" required> <span
+								th:errors="*{mobile}"></span>
+						</div>
+						<div class="mb-3">
+							<label for="email" class="form-label">Email</label> <input
+								type="email" class="form-control" id="email" name="email"
+								th:field="*{email}" required> <span th:errors="*{email}"></span>
+						</div>
+						<div class="mb-3">
+							<label for="password" class="form-label">Password</label> <input
+								type="password" class="form-control" id="password"
+								name="password" required> <span th:errors="*{password}"></span>
+						</div>
+						<div class="mb-3">
+							<label for="confirmPassword" class="form-label">Confirm
+								Password</label> <input type="password" class="form-control"
+								id="confirmPassword" name="confirmPassword" required> <span
+								th:errors="*{confirmPassword}"></span>
+						</div>
+						<div class="mb-3">
+							<label for="licenceNumber" class="form-label">Licence
+								Number</label> <input type="text" class="form-control"
+								id="licenceNumber" name="licenceNumber" required> <span
+								th:errors="*{licenceNumber}"></span>
+						</div>
+
+						<div class="d-grid">
+							<button type="submit" class="btn btn-primary">Register
+								Theatre</button>
+						</div>
+					</form>
+					<div class="mt-3 text-center">
+						<p>
+							Want to register as a customer? <a href="/customer/signup">Click
+								here</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<th:block th:insert="~{fragments/footer.html}"></th:block>
+
+</body>
+</html>
