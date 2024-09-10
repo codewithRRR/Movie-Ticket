@@ -28,8 +28,18 @@
 				th:src="${show.movie.movie_poster}"></td>
 			<td th:text="${show.ticketPrice}+'&#8377'"></td>
 			<td th:text="${show.movie.releaseDate}"></td>
-			<td><a th:href="'/theatre/open-booking/'+${show.id}" th:if="${!show.available}"><button>open</button></a>
-			<a th:href="'/theatre/open-booking/'+${show.id}" th:if="${show.available}"><button>close</button></a>
+			<td> <a
+                  th:href="'/theatre/open-booking/'+${show.id}"
+                  th:if="${!show.available}"
+                  class="btn btn-primary btn-sm"
+                  >Open</a
+                >
+                <a
+                  th:href="'/theatre/close-booking/'+${show.id}"
+                  th:if="${show.available}"
+                  class="btn btn-danger btn-sm"
+                  >Close</a
+                ></td>
 			</tr>
 	</table>
 	</body>

@@ -50,7 +50,8 @@ public class GeneralController {
 	private String adminPassword;
 
 	@GetMapping("/")
-	public String loadMain() {
+	public String loadMain(ModelMap map) {
+		map.put("movies", movieRepository.findAll());
 		return "home.html";
 		// here it will use internally requestdispatcher when we return any file
 	}
@@ -245,9 +246,10 @@ public class GeneralController {
 	}
 
 	@PostMapping("/admin/add-movie")
-	public String addMovie(HttpSession session, ModelMap map, Movie movie, @RequestParam MultipartFile image) throws IOException {
-		//session validation
-		
+	public String addMovie(HttpSession session, ModelMap map, Movie movie, @RequestParam MultipartFile image)
+			throws IOException {
+		// session validation
+
 		if (session.getAttribute("admin") != null) {
 			movie.setMovie_poster(cloudinaryHelper.saveMoviePosterToCloud(image));
 			movieRepository.save(movie);

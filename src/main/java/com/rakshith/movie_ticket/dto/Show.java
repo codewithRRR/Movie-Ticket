@@ -8,7 +8,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Data
+	@Data
 @Table(name = "MovieShow")
 @Entity
 public class Show {
