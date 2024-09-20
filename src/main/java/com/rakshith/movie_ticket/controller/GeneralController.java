@@ -16,12 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.rakshith.movie_ticket.dto.Customer;
 import com.rakshith.movie_ticket.dto.Movie;
+import com.rakshith.movie_ticket.dto.Show;
 import com.rakshith.movie_ticket.dto.Theatre;
 import com.rakshith.movie_ticket.helper.AES;
 import com.rakshith.movie_ticket.helper.CloudinaryHelper;
 import com.rakshith.movie_ticket.helper.Emailsendinghelper;
 import com.rakshith.movie_ticket.repository.CustomerRepository;
 import com.rakshith.movie_ticket.repository.MovieRepository;
+import com.rakshith.movie_ticket.repository.ShowRepository;
 import com.rakshith.movie_ticket.repository.TheatreRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -43,6 +45,9 @@ public class GeneralController {
 
 	@Autowired
 	CloudinaryHelper cloudinaryHelper;
+
+	@Autowired
+	ShowRepository showRepository;
 
 	@Value("${admin.email}")
 	private String adminEmail;
@@ -260,6 +265,32 @@ public class GeneralController {
 		{
 			session.setAttribute("failure", "Invalid session Log in again");
 			return "redirect:/login";
+		}
+
+	}
+
+	@GetMapping("/movies")
+	public String loadAllMovies(ModelMap map, HttpSession session) {
+		List<Movie> movies = movieRepository.findAll();
+		if (movies.isEmpty()) {
+			session.setAttribute("failure", "No Movies are running");
+			return "redirect:/";
+		} else {
+			map.put("movies", movies);
+			return "view-movies.html";
+		}
+	}
+
+	@GetMapping("/shows/{id}")
+	public String loadAllShows(ModelMap map, HttpSession session, @PathVariable int id) {
+		Movie movie = movieRepository.findById(id).orElseThrow();
+		List<Show> shows = showRepository.findByMovieAndAvailableTrue(movie);
+		if (shows.isEmpty()) {
+			session.setAttribute("failure", "There is no show running");
+			return "redirect:/";
+		} else {
+			map.put("shows", shows);
+			return "view-shows.html";
 		}
 
 	}

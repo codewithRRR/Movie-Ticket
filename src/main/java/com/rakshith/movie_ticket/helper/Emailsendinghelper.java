@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.rakshith.movie_ticket.dto.Booking;
 import com.rakshith.movie_ticket.dto.Customer;
 import com.rakshith.movie_ticket.dto.Theatre;
 
@@ -42,7 +43,7 @@ public class Emailsendinghelper {
 
 	}
 
-	public void senMailtoTheatre(@Valid Theatre  theatre) {
+	public void senMailtoTheatre(@Valid Theatre theatre) {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 
@@ -58,6 +59,26 @@ public class Emailsendinghelper {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	public void sendBookingConfirmation(Customer customer, Booking booking) {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+		try {
+			helper.setFrom("rakshithsalian776@gmail.com", "Movie-Ticket-Site");
+			helper.setTo(customer.getEmail());
+			helper.setSubject("Booking Confirmation");
+			Context context = new Context();
+			context.setVariable("booking", booking);
+			String body = templateEngine.process("booking-confirmation-template.html", context);
+			helper.setText(body, true);
+			mailSender.send(message);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
 
 	}
 }

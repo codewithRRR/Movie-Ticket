@@ -14,4 +14,8 @@ public interface ShowRepository  extends JpaRepository<Show, Integer>{
 
 	boolean existsByScreenAndTimingAndAvailableTrueAndMovieIn(Screen screen, int timing, List<Movie> movies);
 
+	List<Show> findByMovieAndAvailableTrue(Movie movie);
+
+	
+
 }

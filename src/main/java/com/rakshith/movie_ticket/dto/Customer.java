@@ -1,13 +1,18 @@
 package com.rakshith.movie_ticket.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
@@ -38,7 +43,8 @@ public class Customer {
 	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$", message = "* Enter 8 charecters with one lowercase, one uppercase, one number and one special charecter")
 	private String password;
 	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$", message = "* Enter 8 charecters with one lowercase, one uppercase, one number and one special charecter")
-	// it will  not shows the confirm password in database because there is no use of cp4
+	// it will not shows the confirm password in database because there is no use of
+	// cp4
 	@Transient
 	private String confirmPassword;
 	@NotNull(message = "*It is compulsory feild")
@@ -48,7 +54,8 @@ public class Customer {
 	private LocalDate dob;
 	private int otp;
 	private boolean verified;
-	//by default false
-	
-}
+	// by default false
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	List<Booking> bookingList = new ArrayList<Booking>();
 
+}

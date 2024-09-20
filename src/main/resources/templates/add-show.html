@@ -1,33 +1,71 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
-<title>Add Show</title>
-</head>
-<body>
-<form action="/theatre/add-show" method="post">
-Select a Screen: <select name="screen.id">
-<option disabled="disabled" selected="selected"> Select a screen</option>
-<option th:each="screen:${screens}" th:value="${screen.id}" th:text="${screen.name}"></option>
-</select>
-<br>
-Select a Movie: <select name="movie.id">
-<option disabled="disabled" selected="selected">Select a Movie</option>
-<option th:each="movie:${movies}" th:value="${movie.id}" th:text="${movie.name}"></option>
-</select>
-<br>
-Select a Timing:<select name="timing">
-<option disabled="disabled" selected="selected">Select Time</option>
-<option value="1">10pm</option>
-<option value="2">1pm</option>
-<option value="3">4pm</option>
-<option value="4">7pm</option>
-<option value="5">10pm</option>
-</select>
-<br>
- Ticket Price (in Rs.): <input type="number" name="ticketPrice"> <br>
-<button>Add</button>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-</form>
+<head>
+  <title>Add Show - BookMyMovie</title>
+  <th:block th:insert="~{fragments/head.html}" />
+  <link rel="stylesheet" href="/css/add-show.css">
+</head>
+
+<body>
+  <th:block th:insert="~{/fragments/navbar.html}" />
+
+  <th:block th:insert="~{/fragments/message.html}" />
+  
+  <main>
+    <div class="container">
+      <h1 class="text-center">Add Show</h1>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="form-container">
+            <form action="/theatre/add-show" method="post">
+              <div class="mb-3">
+                <label for="screen" class="form-label">Select a Screen:</label>
+                <select id="screen" name="screen.id" class="form-select">
+                  <option disabled="disabled" selected="selected">Select a Screen</option>
+                  <option th:each="screen:${screens}" th:value="${screen.id}" th:text="${screen.name}"></option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="movie" class="form-label">Select a Movie:</label>
+                <select id="movie" name="movie.id" class="form-select">
+                  <option disabled="disabled" selected="selected">Select a Movie</option>
+                  <option th:each="movie:${movies}" th:value="${movie.id}" th:text="${movie.name}"></option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="timing" class="form-label">Select Timing:</label>
+                <select id="timing" name="timing" class="form-select">
+                  <option disabled="disabled" selected="selected">Select Time</option>
+                  <option value="1">10AM</option>
+                  <option value="2">1PM</option>
+                  <option value="3">4PM</option>
+                  <option value="4">7PM</option>
+                  <option value="5">10PM</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="ticketPrice" class="form-label">Ticket Price (in Rs.):</label>
+                <input type="number" id="ticketPrice" name="ticketPrice" class="form-control" />
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary">Add Show</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <th:block th:insert="~{/fragments/footer.html}" />
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/alert.js"></script>
 </body>
+
 </html>

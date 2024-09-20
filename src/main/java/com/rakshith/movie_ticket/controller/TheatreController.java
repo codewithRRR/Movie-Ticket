@@ -1,6 +1,7 @@
 package com.rakshith.movie_ticket.controller;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -130,7 +131,14 @@ public class TheatreController {
 	public String addScreen(Screen screen, HttpSession session) {
 		Theatre theatre = (Theatre) session.getAttribute("theatre");
 		if (theatre != null) {
-			if (screenRepository.existsByName(screen.getName())) {
+			boolean flag = false;
+			List<Screen> screens = theatre.getScreens();
+			for (Screen screen1 : screens) {
+				if (screen.getName().equals(screen1.getName())) {
+					flag = true;
+				}
+			}
+			if (flag) {
 				session.setAttribute("failure", "Screen alredy exists");
 				return "redirect:/";
 			} else
@@ -145,9 +153,8 @@ public class TheatreController {
 					}
 				}
 				screen.setSeats(seats);
-				List<Screen> screens = theatre.getScreens();
 				screens.add(screen);
-
+				screen.setTheatre(theatre);
 				theatrerepository.save(theatre);
 				session.setAttribute("theatre", theatrerepository.findById(theatre.getId()).orElseThrow());
 				session.setAttribute("success", "Screen and seats are Added success");
@@ -234,16 +241,23 @@ public class TheatreController {
 			Screen screen = show.getScreen();
 			int timing = show.getTiming();
 			LocalDate movieDate = show.getMovie().getReleaseDate();
-			List<Movie> movies = movieRepository.findByReleaseDate(movieDate);
-			boolean flag = showRepository.existsByScreenAndTimingAndAvailableTrueAndMovieIn(screen, timing, movies);
-			if (flag) {
-				session.setAttribute("failure", "Already there is a show running, can not open different booking");
-				return "redirect:/theatre/manage-show";
+			LocalDate currentDate = LocalDate.now();
+			if (Period.between(currentDate, movieDate).getDays() >= 0
+					&& Period.between(movieDate, currentDate).getDays() <= 10) {
+				List<Movie> movies = movieRepository.findByReleaseDate(movieDate);
+				boolean flag = showRepository.existsByScreenAndTimingAndAvailableTrueAndMovieIn(screen, timing, movies);
+				if (flag) {
+					session.setAttribute("failure", "Already there is a show running, can not open different booking");
+					return "redirect:/theatre/manage-show";
+				} else {
+
+					show.setAvailable(true);
+					showRepository.save(show);
+					session.setAttribute("success", "Booking open");
+					return "redirect:/theatre/manage-show";
+				}
 			} else {
-				
-				show.setAvailable(true);
-				showRepository.save(show);
-				session.setAttribute("success", "Booking open");
+				session.setAttribute("failure", "Can not open Booking Now");
 				return "redirect:/theatre/manage-show";
 			}
 
